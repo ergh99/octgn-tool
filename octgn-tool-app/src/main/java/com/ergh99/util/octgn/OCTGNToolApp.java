@@ -9,11 +9,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Set;
 
+import org.apache.commons.cli.AlreadySelectedException;
+import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionBuilder;
+import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.UnrecognizedOptionException;
@@ -22,7 +25,8 @@ import org.slf4j.LoggerFactory;
 
 public class OCTGNToolApp {
 
-	public static final String FEED_URL = "https://www.myget.org/f/octgngamedirectory";
+	public static final String FEED_URL =
+			"https://www.myget.org/f/octgngamedirectory";
 	public static final String FRESH_INSTALL_OPT = "f";
 	public static final String OCTGN_HOME_OPT = "h";
 	public static final String DO_INSTALL_OPT = "i";
@@ -110,7 +114,7 @@ public class OCTGNToolApp {
 	}
 
 	protected static void processArguments(String[] args) throws ParseException {
-		CommandLineParser p = new DefaultParser();
+		CommandLineParser p = new BasicParser();
 		CommandLine cl = null;
 		try {
 			cl = p.parse(getOptions(), args);
@@ -146,30 +150,43 @@ public class OCTGNToolApp {
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	private static Options getOptions() {
 		Options opts = new Options();
 
-		opts.addOption(Option.builder(FRESH_INSTALL_OPT)
-				.desc("Only for a fresh install of OCTGN.  Sets up Android=Netrunner")
-				.longOpt("fresh-install")
-				.build());
-		opts.addOption(Option.builder(OCTGN_HOME_OPT)
-				.desc("Set OCTGN home directory")
-				.longOpt("octgn-home")
-				.argName("path")
-				.build());
-		opts.addOption(Option.builder(DO_INSTALL_OPT)
-				.desc("Install the specified game from the OCTGN Game Directory")
-				.longOpt("install=game")
-				.hasArg()
-				.argName("game-name")
-				.build());
-		opts.addOption(Option.builder(GET_IMAGES_OPT)
-				.desc("Install images for specified game (Only Android-Netrunner is currently supported)")
-				.longOpt("get-images")
-				.hasArg()
-				.argName("game-name")
-				.build());
+		opts.addOption(OptionBuilder
+				.withDescription("Set OCTGN home directory")
+				.withLongOpt("octgn-home")
+				.hasArg(true)
+				.withArgName("path")
+				.create(OCTGN_HOME_OPT));
+		OptionGroup modeGroup = new OptionGroup();
+		Option freshInstallOpt = OptionBuilder
+				.withDescription("Only for a fresh install of OCTGN.  Sets up Android=Netrunner")
+				.withLongOpt("fresh-install")
+				.create(FRESH_INSTALL_OPT);
+		modeGroup.addOption(freshInstallOpt);
+		modeGroup.addOption(
+				OptionBuilder
+				.withDescription("Install the specified game from the OCTGN Game Directory")
+				.withLongOpt("install=game")
+				.hasArg(true)
+				.withArgName("game-name")
+				.create(DO_INSTALL_OPT));
+		modeGroup.addOption(
+				OptionBuilder
+				.withDescription("Install images for specified game (Only Android-Netrunner is currently supported)")
+				.withLongOpt("get-images")
+				.hasArg(true)
+				.withArgName("game-name")
+				.create(GET_IMAGES_OPT));
+		modeGroup.isRequired();
+		try {
+			modeGroup.setSelected(freshInstallOpt);
+		} catch (AlreadySelectedException e) {
+			throw new Error(e);
+		}
+		opts.addOptionGroup(modeGroup);
 
 		return opts;
 	}

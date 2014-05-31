@@ -5,9 +5,14 @@ import static org.junit.Assert.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 
 public class OCTGNToolAppTest {
+
+	@Rule
+	public ExpectedSystemExit exit = ExpectedSystemExit.none();
 
 	@Test
 	public void testPrintUsageAndExit() {
@@ -21,5 +26,11 @@ public class OCTGNToolAppTest {
 
 		String jarPath = OCTGNToolApp.getJarFromUrl(jarUrl);
 		assertEquals("jar.jar", jarPath);
+	}
+
+	@Test
+	public void testOCTGNToolApp() {
+		exit.expectSystemExit();
+		OCTGNToolApp.main(new String[] {});
 	}
 }
