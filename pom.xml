@@ -44,4 +44,9 @@
       </repositories>
     </profile>
   </profiles>
+  <scm>
+  	<url>https://github.com/ergh99/octgn-tool</url>
+  	<connection>scm:git:git://github.com/ergh99/octgn-tool.git</connection>
+  	<developerConnection>scm:git:git@github.com:ergh99/octgn-tool.git</developerConnection>
+  </scm>
 </project>
