@@ -33,4 +33,9 @@ public class OCTGNToolAppTest {
 		exit.expectSystemExit();
 		OCTGNToolApp.main(new String[] {});
 	}
+
+	@Test
+	public void testProcessArguments() {
+		OCTGNToolApp.processArguments(new String[]{"-g", "Android-Netrunner"});
+	}
 }

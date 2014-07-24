@@ -15,7 +15,7 @@ public class OCTGNGameTest {
 		OCTGN o = new OCTGN(Paths.get("."));
 		OCTGNGame g = o.getGameByTitle(ANRConstants.ANR_TITLE);
 		Set<Path> cardPaths = g.getCardPaths();
-		assertEquals(463, cardPaths.size());
+		assertEquals(483, cardPaths.size());
 	}
 
 	@Test
@@ -36,14 +36,14 @@ public class OCTGNGameTest {
 	public void testGetSetCount() {
 		OCTGN o = new OCTGN(Paths.get("."));
 		OCTGNGame g = o.getGameByTitle(ANRConstants.ANR_TITLE);
-		assertEquals(Integer.valueOf(15), g.getSetCount());
+		assertEquals(Integer.valueOf(16), g.getSetCount());
 	}
 
 	@Test
 	public void testGetCardCount() {
 		OCTGN o = new OCTGN(Paths.get("."));
 		OCTGNGame g = o.getGameByTitle(ANRConstants.ANR_TITLE);
-		assertEquals(Integer.valueOf(463), g.getCardCount());
+		assertEquals(Integer.valueOf(483), g.getCardCount());
 	}
 
 }

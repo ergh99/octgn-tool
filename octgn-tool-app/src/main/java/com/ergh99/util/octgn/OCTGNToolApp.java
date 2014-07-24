@@ -7,9 +7,9 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Set;
 
-import org.apache.commons.cli.AlreadySelectedException;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -78,7 +78,7 @@ public class OCTGNToolApp {
 				}
 				System.out.println("Done!");
 			}
-		} catch (ParseException | IOException | URISyntaxException e) {
+		} catch (IOException | URISyntaxException e) {
 			e.printStackTrace();
 			System.exit(-1);
 		}
@@ -113,7 +113,7 @@ public class OCTGNToolApp {
 		}
 	}
 
-	protected static void processArguments(String[] args) throws ParseException {
+	protected static void processArguments(String[] args) {
 		CommandLineParser p = new BasicParser();
 		CommandLine cl = null;
 		try {
@@ -121,10 +121,14 @@ public class OCTGNToolApp {
 		} catch (UnrecognizedOptionException e) {
 			printUsage();
 			System.exit(-2);
+		} catch (ParseException e) {
+			log.debug("Error parsing arguments: {}", Arrays.toString(args));
+			e.printStackTrace();
+			System.exit(-1);
 		}
 
 		FRESH_INSTALL = cl.hasOption(FRESH_INSTALL_OPT);
-		if (FRESH_INSTALL) {
+		if (FRESH_INSTALL || args.length == 0) {
 			gameName = ANRConstants.ANR_TITLE;
 			octgnPath = Paths.get(".");
 		} else {
@@ -181,11 +185,6 @@ public class OCTGNToolApp {
 				.withArgName("game-name")
 				.create(GET_IMAGES_OPT));
 		modeGroup.isRequired();
-		try {
-			modeGroup.setSelected(freshInstallOpt);
-		} catch (AlreadySelectedException e) {
-			throw new Error(e);
-		}
 		opts.addOptionGroup(modeGroup);
 
 		return opts;
