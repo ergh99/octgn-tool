@@ -21,7 +21,7 @@ public class ANRImageDownloader {
 	private static ANRImageDownloader instance;
 
 	public static void downloadCards(Set<Path> cardPaths) throws InterruptedException {
-		String imageUrl = "http://netrunnerdb.com/web/bundles/netrunnerdbcards/images/cards/en/#.png";
+		String imageUrl = "http://netrunnerdb.com/bundles/netrunnerdbcards/images/cards/en/#.png";
 		// Netiquette standard limit is 4 simultaneous connections
 		ExecutorService threadPool = Executors.newFixedThreadPool(4);
 		CountDownLatch doneSignal = new CountDownLatch(cardPaths.size());
