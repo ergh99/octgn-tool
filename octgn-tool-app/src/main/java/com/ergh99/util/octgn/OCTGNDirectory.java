@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.abdera.Abdera;
-import org.apache.abdera.i18n.iri.IRI;
 import org.apache.abdera.model.Collection;
 import org.apache.abdera.model.Document;
 import org.apache.abdera.model.Entry;
@@ -16,40 +15,43 @@ import org.apache.abdera.model.Feed;
 import org.apache.abdera.model.Service;
 import org.apache.abdera.parser.Parser;
 
+@lombok.extern.slf4j.XSlf4j
 public class OCTGNDirectory {
 
     private static final Abdera abdera = new Abdera();
     private URL feedUrl;
 
     public OCTGNDirectory(URL feedUrl) {
-	this.feedUrl = feedUrl;
+        this.feedUrl = feedUrl;
     }
 
     public OCTGNEntry getEntryForName(String gameName) throws IOException, URISyntaxException {
-	Optional<OCTGNEntry> entry = getEntriesFromFeed()
-		.stream()
-		.filter(e -> e.getTitle().equals(gameName))
-		.map(e -> new OCTGNEntry(e))
-		.filter(OCTGNEntry::isLatest)
-		.findAny();
-	return (entry.isPresent()) ? entry.get() : null;
+        log.entry(gameName);
+        Optional<OCTGNEntry> entry = getEntriesFromFeed()
+                .stream()
+                .filter(e -> e.getTitle().equals(gameName))
+                .map(e -> new OCTGNEntry(e))
+                .filter(OCTGNEntry::isLatest)
+                .findAny();
+        return log.exit(entry.orElse(null));
     }
 
     public List<Entry> getEntriesFromFeed() throws IOException, URISyntaxException {
-	URLConnection service = feedUrl.openConnection();
-	service.addRequestProperty("Accept", "application/xml");
-	Parser p = abdera.getParser();
-	Document<Service> serviceDoc = p.parse(service.getInputStream()).complete();
-	service.getInputStream().close();
-	Collection packagesElement = serviceDoc.getRoot().getCollection("Default", "Packages");
+        log.entry();
+        URLConnection service = feedUrl.openConnection();
+        service.addRequestProperty("Accept", "application/xml");
+        Parser p = abdera.getParser();
+        Document<Service> serviceDoc = p.parse(service.getInputStream()).complete();
+        service.getInputStream().close();
+        Collection packagesElement = serviceDoc.getRoot().getCollection("Default", "Packages");
 
-	IRI feedIri = new IRI(feedUrl);
-	URLConnection packages = feedIri.trailingSlash().resolve(packagesElement.getHref()).toURL().openConnection();
-	packages.addRequestProperty("Accept", "application/atom+xml");
-	Document<Feed> feedDoc = p.parse(packages.getInputStream()).complete();
-	Feed feed = feedDoc.getRoot().complete();
-	packages.getInputStream().close();
+        URL packagesUrl = packagesElement.getResolvedHref().toURL();
+        URLConnection packages = packagesUrl.openConnection();
+        packages.addRequestProperty("Accept", "application/atom+xml");
+        Document<Feed> feedDoc = p.parse(packages.getInputStream()).complete();
+        Feed feed = feedDoc.getRoot().complete();
+        packages.getInputStream().close();
 
-	return feed.getEntries();
+        return log.exit(feed.getEntries());
     }
 }
