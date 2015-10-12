@@ -7,7 +7,7 @@ import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
 
-public class OCTGNTest {
+public class OCTGNITCase {
 
     @Test
     public void testGetGameByTitle() {

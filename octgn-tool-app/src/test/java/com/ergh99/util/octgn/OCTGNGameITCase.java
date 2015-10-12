@@ -8,42 +8,42 @@ import java.util.Set;
 
 import org.junit.Test;
 
-public class OCTGNGameTest {
+public class OCTGNGameITCase {
 
-	@Test
-	public void testGetCardPaths() {
-		OCTGN o = new OCTGN(Paths.get("."));
-		OCTGNGame g = o.getGameByTitle(ANRConstants.ANR_TITLE);
-		Set<Path> cardPaths = g.getCardPaths();
-		assertEquals(483, cardPaths.size());
-	}
+    @Test
+    public void testGetCardPaths() {
+        OCTGN o = new OCTGN(Paths.get("."));
+        OCTGNGame g = o.getGameByTitle(ANRConstants.ANR_TITLE);
+        Set<Path> cardPaths = g.getCardPaths();
+        assertEquals(483, cardPaths.size());
+    }
 
-	@Test
-	public void testGetId() {
-		OCTGN o = new OCTGN(Paths.get("."));
-		OCTGNGame g = o.getGameByTitle(ANRConstants.ANR_TITLE);
-		assertEquals(ANRConstants.ANR_ID, g.getId());
-	}
+    @Test
+    public void testGetId() {
+        OCTGN o = new OCTGN(Paths.get("."));
+        OCTGNGame g = o.getGameByTitle(ANRConstants.ANR_TITLE);
+        assertEquals(ANRConstants.ANR_ID, g.getId());
+    }
 
-	@Test
-	public void testGetTitle() {
-		OCTGN o = new OCTGN(Paths.get("."));
-		OCTGNGame g = o.getGameByTitle(ANRConstants.ANR_TITLE);
-		assertEquals(ANRConstants.ANR_TITLE, g.getTitle());
-	}
+    @Test
+    public void testGetTitle() {
+        OCTGN o = new OCTGN(Paths.get("."));
+        OCTGNGame g = o.getGameByTitle(ANRConstants.ANR_TITLE);
+        assertEquals(ANRConstants.ANR_TITLE, g.getTitle());
+    }
 
-	@Test
-	public void testGetSetCount() {
-		OCTGN o = new OCTGN(Paths.get("."));
-		OCTGNGame g = o.getGameByTitle(ANRConstants.ANR_TITLE);
-		assertEquals(Integer.valueOf(16), g.getSetCount());
-	}
+    @Test
+    public void testGetSetCount() {
+        OCTGN o = new OCTGN(Paths.get("."));
+        OCTGNGame g = o.getGameByTitle(ANRConstants.ANR_TITLE);
+        assertEquals(Integer.valueOf(16), g.getSetCount());
+    }
 
-	@Test
-	public void testGetCardCount() {
-		OCTGN o = new OCTGN(Paths.get("."));
-		OCTGNGame g = o.getGameByTitle(ANRConstants.ANR_TITLE);
-		assertEquals(Integer.valueOf(483), g.getCardCount());
-	}
+    @Test
+    public void testGetCardCount() {
+        OCTGN o = new OCTGN(Paths.get("."));
+        OCTGNGame g = o.getGameByTitle(ANRConstants.ANR_TITLE);
+        assertEquals(Integer.valueOf(483), g.getCardCount());
+    }
 
 }
