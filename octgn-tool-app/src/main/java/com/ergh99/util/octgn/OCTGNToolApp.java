@@ -66,7 +66,6 @@ public class OCTGNToolApp {
                 try {
                     ANRImageDownloader.downloadCards(cardPaths);
                 } catch (InterruptedException e) {
-                    log.catching(e);
                     throw log.throwing(new Error(e));
                 }
                 System.out.println("Done!");

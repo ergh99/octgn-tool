@@ -78,7 +78,6 @@ public class OCTGNEntry {
             remote.close();
             log.info("Copied {} bytes", bytesCopied);
         } catch (URISyntaxException | IOException e) {
-            log.catching(e);
             throw log.throwing(new Error(e));
         }
         log.exit();

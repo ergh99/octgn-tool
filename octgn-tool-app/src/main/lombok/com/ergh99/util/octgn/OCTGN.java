@@ -69,7 +69,6 @@ public class OCTGN {
 
             throw log.throwing(new Error("No game definition found for " + gameTitle));
         } catch (IOException | XPathExpressionException e) {
-            log.catching(e);
             throw log.throwing(new Error(e));
         }
     }

@@ -18,7 +18,7 @@ import org.apache.abdera.parser.Parser;
 @lombok.extern.slf4j.XSlf4j
 public class OCTGNDirectory {
 
-    private static final Abdera abdera = new Abdera();
+    private static final Parser abderaParser = Abdera.getNewParser();
     private URL feedUrl;
 
     public OCTGNDirectory(URL feedUrl) {
@@ -40,15 +40,14 @@ public class OCTGNDirectory {
         log.entry();
         URLConnection service = feedUrl.openConnection();
         service.addRequestProperty("Accept", "application/xml");
-        Parser p = abdera.getParser();
-        Document<Service> serviceDoc = p.parse(service.getInputStream()).complete();
+        Document<Service> serviceDoc = abderaParser.parse(service.getInputStream()).complete();
         service.getInputStream().close();
         Collection packagesElement = serviceDoc.getRoot().getCollection("Default", "Packages");
 
         URL packagesUrl = packagesElement.getResolvedHref().toURL();
         URLConnection packages = packagesUrl.openConnection();
         packages.addRequestProperty("Accept", "application/atom+xml");
-        Document<Feed> feedDoc = p.parse(packages.getInputStream()).complete();
+        Document<Feed> feedDoc = abderaParser.parse(packages.getInputStream()).complete();
         Feed feed = feedDoc.getRoot().complete();
         packages.getInputStream().close();
 

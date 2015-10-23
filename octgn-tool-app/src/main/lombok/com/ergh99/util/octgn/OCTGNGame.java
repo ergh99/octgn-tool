@@ -123,7 +123,6 @@ public class OCTGNGame {
                 in.close();
             }
         } catch (XPathExpressionException | IOException e) {
-            log.catching(e);
             throw log.throwing(new Error(e));
         }
         setCount = setCounter;
