@@ -37,6 +37,7 @@ public class ANRImageDownloader {
             String cardId = getIdFromPath(cardPath);
             try {
                 URL cardUrl = new URL(imageUrl.replace("#", cardId));
+                Files.createDirectories(cardPath);
                 threadPool.execute(
                         new HttpFileSynchronizer(cardUrl, cardPath, doneSignal));
                 Path jpgPath = getJPGPath(cardPath);
@@ -44,7 +45,6 @@ public class ANRImageDownloader {
                     log.warn("Deleting old format file: {}", jpgPath);
                 }
             } catch (IOException e) {
-                log.catching(e);
                 throw log.throwing(new Error(e));
             }
         }
@@ -60,6 +60,7 @@ public class ANRImageDownloader {
     }
 
     private static String getIdFromPath(Path cardPath) {
+    	log.entry(cardPath);
         Path cardPathName = cardPath.getFileName();
         if (cardPathName == null) {
             return log.exit(null);
@@ -67,6 +68,6 @@ public class ANRImageDownloader {
         String cardFileName = cardPathName.toString();
         String cardId = cardFileName.substring(0, cardFileName.lastIndexOf(ANRConstants.FORMAT_EXT));
         String cardShortId = cardId.substring(cardId.length() - 5);
-        return cardShortId;
+        return log.exit(cardShortId);
     }
 }
