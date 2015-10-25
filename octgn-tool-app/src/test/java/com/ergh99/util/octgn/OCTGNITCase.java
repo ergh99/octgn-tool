@@ -1,38 +1,59 @@
 package com.ergh99.util.octgn;
 
-import static com.ergh99.util.octgn.ANRConstants.ANR_ID;
-import static com.ergh99.util.octgn.ANRConstants.ANR_TITLE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static com.ergh99.util.octgn.ANRConstants.*;
+import static com.ergh99.util.octgn.OCTGNToolTestUtility.*;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class OCTGNITCase {
 
-    @Test
+	private static Path testDirectory;
+
+	@BeforeClass
+	public static void setUp() throws IOException {
+		testDirectory = createTestDirectoryStructure();
+		installAndroidNetrunnerFacade(testDirectory);
+	}
+
+	private OCTGN o;
+
+	@Before
+	public void setUpForTest() {
+		o = new OCTGN(testDirectory);
+	}
+
+	@Test
     public void testGetGameByTitle() {
-        OCTGN o = new OCTGN();
         OCTGNGame g = o.getGameByTitle(ANR_TITLE);
-        assertSame(ANR_TITLE, g.getTitle());
+        assertThat(g.getTitle(), is(ANR_TITLE));
     }
 
     @Test
     public void testFindGameIdByTitle() {
-        OCTGN o = new OCTGN();
         String id = o.findGameIdByTitle(ANR_TITLE);
-        assertEquals(ANR_ID, id);
+        assertThat(id, is(ANR_ID));
     }
 
     @Test
     public void testGetGameDatabase() {
-        OCTGN o = new OCTGN();
-        assertEquals("." + java.io.File.separator + "GameDatabase", o.getGameDatabase().toString());
+    	Path gameDatabase = o.getGameDatabase();
+        assertThat(Files.exists(gameDatabase),  is(true));
+        assertThat(Files.isDirectory(gameDatabase),  is(true));
     }
 
     @Test
     public void testGetImageDatabase() {
-        OCTGN o = new OCTGN();
-        assertEquals("." + java.io.File.separator + "ImageDatabase", o.getImageDatabase().toString());
+    	Path imageDatabase = o.getImageDatabase();
+        assertThat(Files.exists(imageDatabase),  is(true));
+        assertThat(Files.isDirectory(imageDatabase),  is(true));
     }
 
 }

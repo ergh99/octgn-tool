@@ -1,0 +1,127 @@
+<entry xmlns="http://www.w3.org/2005/Atom">
+	<id>https://www.myget.org/F/octgngamedirectory/Packages(Id='0f38e453-26df-4c04-9d67-6d43de939c77',Version='3.22.1.0')
+	</id>
+	<category term="MyGet.V2FeedPackage"
+		scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+	<link rel="edit" title="V2FeedPackage"
+		href="Packages(Id='0f38e453-26df-4c04-9d67-6d43de939c77',Version='3.22.1.0')" />
+	<link
+		rel="http://schemas.microsoft.com/ado/2007/08/dataservices/related/Screenshots"
+		type="application/atom+xml;type=feed" title="Screenshots"
+		href="Packages(Id='0f38e453-26df-4c04-9d67-6d43de939c77',Version='3.22.1.0')/Screenshots" />
+	<title type="text">Android-Netrunner</title>
+	<summary type="text">Android: Netrunner is an asymmetrical cyberpunk
+		Card Game for two players.
+
+
+		Set in the dystopian future of Android and Infiltration, the game pits a
+		megacorporation and its massive resources against the subversive
+		talents of lone runners.
+
+		Automation rank: A
+		(This game definition contains significant cards automations to allow the
+		game to play faster with less mistakes.)
+	</summary>
+	<updated>2015-08-22T22:01:15Z</updated>
+	<author>
+		<name>Db0</name>
+	</author>
+	<link rel="edit-media" title="V2FeedPackage"
+		href="Packages(Id='0f38e453-26df-4c04-9d67-6d43de939c77',Version='3.22.1.0')/$value" />
+	<content type="binary/octet-stream"
+		src="https://www.myget.org/F/octgngamedirectory/api/v2/package/0f38e453-26df-4c04-9d67-6d43de939c77/3.22.1.0" />
+	<m:properties
+		xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+		<d:Id xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">0f38e453-26df-4c04-9d67-6d43de939c77</d:Id>
+		<d:Version xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">3.22.1.0</d:Version>
+		<d:NormalizedVersion
+			xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">3.22.1.0</d:NormalizedVersion>
+		<d:Authors xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">Db0</d:Authors>
+		<d:Copyright xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+			m:null="true" />
+		<d:Created xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+			m:type="Edm.DateTime">2015-08-22T22:01:15.8521454</d:Created>
+		<d:Dependencies
+			xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" />
+		<d:Description xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">Android: Netrunner is an
+			asymmetrical cyberpunk Card Game for two players.
+
+
+			Set in the dystopian future of Android and Infiltration, the game pits a
+			megacorporation and its massive resources against the subversive
+			talents of lone runners.
+
+			Automation rank: A
+			(This game definition contains significant cards automations to allow the
+			game to play faster with less mistakes.)
+		</d:Description>
+		<d:DownloadCount
+			xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+			m:type="Edm.Int32">5382</d:DownloadCount>
+		<d:GalleryDetailsUrl
+			xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">https://www.myget.org/feed/octgngamedirectory/package/nuget/0f38e453-26df-4c04-9d67-6d43de939c77/3.22.1.0
+		</d:GalleryDetailsUrl>
+		<d:IconUrl xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">https://raw.github.com/db0/Android-Netrunner-OCTGN/master/ANR_box.jpg
+		</d:IconUrl>
+		<d:IsLatestVersion
+			xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+			m:type="Edm.Boolean">false</d:IsLatestVersion>
+		<d:IsAbsoluteLatestVersion
+			xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+			m:type="Edm.Boolean">false</d:IsAbsoluteLatestVersion>
+		<d:LastUpdated xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+			m:type="Edm.DateTime">2015-08-22T22:01:15.8521454</d:LastUpdated>
+		<d:LastEdited xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+			m:type="Edm.DateTime">2015-08-22T22:01:15.8521454</d:LastEdited>
+		<d:Published xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+			m:type="Edm.DateTime">2015-08-22T22:01:15.8521454</d:Published>
+		<d:LicenseUrl xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+			m:null="true" />
+		<d:LicenseNames
+			xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+			m:null="true" />
+		<d:LicenseReportUrl
+			xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+			m:null="true" />
+		<d:PackageHash xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">8gqWBYr3gdF0u+9kMfRwOa0KpBxBYbSHTpUuCQpGz5XWjUFm6PmiBEpJrDrFgACsJ7aRZ2oCYHAK38iN9J917w==
+		</d:PackageHash>
+		<d:PackageHashAlgorithm
+			xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">SHA512</d:PackageHashAlgorithm>
+		<d:PackageSize xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+			m:type="Edm.Int64">11050251</d:PackageSize>
+		<d:ProjectUrl xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">http://octgn.gamersjudgement.com/wordpress/anr
+		</d:ProjectUrl>
+		<d:ReleaseNotes
+			xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+			m:null="true" />
+		<d:ReportAbuseUrl
+			xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">http://localhost</d:ReportAbuseUrl>
+		<d:RequireLicenseAcceptance
+			xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+			m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+		<d:Summary xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">Android: Netrunner is an asymmetrical
+			cyberpunk Card Game for two players.
+
+
+			Set in the dystopian future of Android and Infiltration, the game pits a
+			megacorporation and its massive resources against the subversive
+			talents of lone runners.
+
+			Automation rank: A
+			(This game definition contains significant cards automations to allow the
+			game to play faster with less mistakes.)
+		</d:Summary>
+		<d:Tags xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">asymmetric cyberpunk LCG bluff duel</d:Tags>
+		<d:Title xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">Android-Netrunner</d:Title>
+		<d:VersionDownloadCount
+			xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+			m:type="Edm.Int32">1049</d:VersionDownloadCount>
+		<d:IsPrerelease
+			xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+			m:type="Edm.Boolean">false</d:IsPrerelease>
+		<d:MinClientVersion
+			xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+			m:null="true" />
+		<d:Language xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices">en-US</d:Language>
+	</m:properties>
+</entry>
