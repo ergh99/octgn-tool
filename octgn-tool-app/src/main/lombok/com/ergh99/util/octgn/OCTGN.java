@@ -1,13 +1,16 @@
 package com.ergh99.util.octgn;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.DirectoryStream;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.zip.ZipFile;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
@@ -38,10 +41,41 @@ public class OCTGN {
         imageDatabase = homeDir.resolve("ImageDatabase");
     }
 
+    private static final int ZIP_PREFIX_LENGTH = "def/".length();
     public OCTGNGame installGameFromEntry(OCTGNEntry entry) {
         log.entry(entry);
-        OCTGNGame g = new OCTGNGame(this, entry);
-        return log.exit(g);
+        try (ZipFile nuPkg = new ZipFile(entry.getNuPkg().toFile())) {
+            if (Files.exists(gameDatabase) && Files.isDirectory(gameDatabase)) {
+                Path gameDir = gameDatabase.resolve(entry.getId());
+                Files.createDirectory(gameDir);
+                nuPkg
+                .stream()
+                .filter(e -> e.getName().startsWith("def"))
+                .forEach(zipEntry -> {
+                	try (InputStream in = nuPkg.getInputStream(zipEntry)) {
+                		// Get path stripped of def/ (4 characters)
+                		String relative = zipEntry.getName().substring(ZIP_PREFIX_LENGTH);
+                        Path absolute = gameDir.resolve(relative);
+                        log.info("Creating {}", absolute);
+                        Files.createDirectories(absolute.getParent());
+                        if (zipEntry.isDirectory()) {
+                        	Files.createDirectory(absolute);
+                        } else {
+                        	Files.copy(in, absolute);
+                        }
+                    } catch (FileAlreadyExistsException e) {
+                        log.debug(e.getLocalizedMessage());
+                    } catch (IOException e) {
+                    	throw new Error(e);
+                    }
+                });
+            } else {
+                throw new FileNotFoundException(gameDatabase.toString());
+            }
+        } catch (IOException e) {
+            throw new Error(e);
+        }
+        return log.exit(new OCTGNGame(this, entry));
     }
 
     public OCTGNGame getGameByTitle(String gameTitle) {

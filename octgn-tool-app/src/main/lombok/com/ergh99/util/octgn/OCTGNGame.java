@@ -4,16 +4,13 @@ import static javax.xml.xpath.XPathConstants.NODESET;
 
 import static com.ergh99.util.octgn.ANRConstants.SKIPPABLE_SETS;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.StringReader;
 import java.nio.file.DirectoryStream;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.zip.ZipFile;
 
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
@@ -29,7 +26,6 @@ import lombok.Getter;
 @lombok.extern.slf4j.XSlf4j
 public class OCTGNGame {
 
-    private static final int ZIP_PREFIX_LENGTH = "def/".length();
     private static final XPath xpath = XPathFactory.newInstance().newXPath();
 
     @Getter
@@ -40,72 +36,52 @@ public class OCTGNGame {
     private Path imagesPath;
     private Integer setCount;
     private Integer cardCount;
+    private Set<Path> cardPaths;
+    private XPathExpression cardIdExpression;
+	private XPathExpression setNameExpression;
 
     protected OCTGNGame(OCTGN o, String id, String title) {
         this.id = id;
         this.title = title;
         gamePath = o.getGameDatabase().resolve(id);
         imagesPath = o.getImageDatabase().resolve(id);
+        try {
+			cardIdExpression = xpath.compile("/set/cards/card/@id");
+			setNameExpression = xpath.compile("/set/@name");
+		} catch (XPathExpressionException e) {
+			throw log.throwing(new Error(e));
+		}
     }
 
     protected OCTGNGame(OCTGN o, OCTGNEntry entry) {
         this(o, entry.getId(), entry.getTitle());
-        try (ZipFile nuPkg = new ZipFile(entry.getNuPkg().toFile())) {
-            Path gameDatabase = o.getGameDatabase();
-            if (Files.exists(gameDatabase) && Files.isDirectory(gameDatabase)) {
-                Path gameDir = gameDatabase.resolve(id);
-                Files.createDirectory(gameDir);
-                nuPkg
-                        .stream()
-                        .filter(e -> e.getName().startsWith("def"))
-                        .forEach(zipEntry -> {
-                            try (InputStream in = nuPkg.getInputStream(zipEntry)) {
-                                // Get path stripped of def/ (4 characters)
-                                String relative = zipEntry.getName().substring(ZIP_PREFIX_LENGTH);
-                                Path absolute = gameDir.resolve(relative);
-                                log.info("Creating {}", absolute);
-                                Files.createDirectories(absolute.getParent());
-                                if (zipEntry.isDirectory()) {
-                                    Files.createDirectory(absolute);
-                                } else {
-                                    Files.copy(in, absolute);
-                                }
-                            } catch (FileAlreadyExistsException e) {
-                                log.debug(e.getLocalizedMessage());
-                            } catch (IOException e) {
-                                throw new Error(e);
-                            }
-                        });
-            } else {
-                throw new FileNotFoundException(gameDatabase.toString());
-            }
-        } catch (IOException e) {
-            throw new Error(e);
-        }
     }
 
     public Set<Path> getCardPaths() {
+    	if (cardPaths != null) {
+			return cardPaths;
+		}
         log.entry();
-        Set<Path> cardPaths = new HashSet<>();
+        cardPaths = new HashSet<>();
         Path gameSetsPath = gamePath.resolve("Sets");
         Path imageSetsPath = imagesPath.resolve("Sets");
         int setCounter = 0;
         int cardCounter = 0;
 
-        try (DirectoryStream<Path> setsStream = Files.newDirectoryStream(gameSetsPath, Files::isDirectory)) {
-            XPathExpression expr = xpath.compile("/set/cards/card/@id");
-            XPathExpression setNameExpr = xpath.compile("/set/@name");
+        try (DirectoryStream<Path> setsStream =
+        		Files.newDirectoryStream(gameSetsPath, Files::isDirectory)) {
             for (Path setPath : setsStream) {
                 Path setXml = setPath.resolve("set.xml");
-                InputStream in = Files.newInputStream(setXml);
-                String setName = setNameExpr.evaluate(new InputSource(in));
+                String setXmlString = new String(Files.readAllBytes(setXml), "UTF-8");
+                String setName = setNameExpression.evaluate(
+                		new InputSource(new StringReader(setXmlString)));
                 if (SKIPPABLE_SETS.contains(setName)) {
                     continue;
                 }
                 setCounter++;
                 log.info("Parsing {} : {}", setName, setPath);
-                in = Files.newInputStream(setXml);
-                Object o = expr.evaluate(new InputSource(in), NODESET);
+                Object o = cardIdExpression.evaluate(
+                		new InputSource(new StringReader(setXmlString)), NODESET);
                 if (o instanceof NodeList) {
                     NodeList cardList = (NodeList) o;
                     for (int i = 0; i < cardList.getLength(); i++) {
@@ -120,7 +96,6 @@ public class OCTGNGame {
                         cardCounter++;
                     }
                 }
-                in.close();
             }
         } catch (XPathExpressionException | IOException e) {
             throw log.throwing(new Error(e));
