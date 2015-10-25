@@ -1,6 +1,7 @@
 package com.ergh99.util.octgn;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -18,8 +19,14 @@ import org.apache.abdera.parser.Parser;
 @lombok.extern.slf4j.XSlf4j
 public class OCTGNDirectory {
 
-    private static final Parser abderaParser = Abdera.getNewParser();
+    public static final String FEED_URL = "https://www.myget.org/f/octgngamedirectory";
+
+	private static final Parser abderaParser = Abdera.getNewParser();
     private URL feedUrl;
+
+    public OCTGNDirectory() throws MalformedURLException {
+    	this(new URL(FEED_URL));
+    }
 
     public OCTGNDirectory(URL feedUrl) {
         this.feedUrl = feedUrl;

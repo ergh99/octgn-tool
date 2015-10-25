@@ -22,7 +22,6 @@ import org.apache.commons.cli.UnrecognizedOptionException;
 @lombok.extern.slf4j.XSlf4j
 public class OCTGNToolApp {
 
-    public static final String FEED_URL = "https://www.myget.org/f/octgngamedirectory";
     public static final String FRESH_INSTALL_OPT = "f";
     public static final String OCTGN_HOME_OPT = "h";
     public static final String DO_INSTALL_OPT = "i";
@@ -45,7 +44,7 @@ public class OCTGNToolApp {
             verifyOCTGN();
             OCTGN o = new OCTGN(octgnPath);
             if (FRESH_INSTALL || DO_INSTALL) {
-                OCTGNDirectory dir = new OCTGNDirectory(new URL(FEED_URL));
+                OCTGNDirectory dir = new OCTGNDirectory();
                 OCTGNEntry entry = dir.getEntryForName(gameName);
                 if (entry != null) {
                     o = new OCTGN(octgnPath);
