@@ -67,15 +67,12 @@ public class OCTGNEntry {
 
     private void downloadNuPkg() {
         log.entry();
-        InputStream remote;
-        try {
-            remote = src.toURL().openStream();
+        try (InputStream remote = src.toURL().openStream()) {
             File local = File.createTempFile("octgn-", ".zip");
             local.deleteOnExit();
             nuPkg = Paths.get(local.getAbsolutePath());
             log.info("Copying {}", src);
             long bytesCopied = Files.copy(remote, nuPkg, StandardCopyOption.REPLACE_EXISTING);
-            remote.close();
             log.info("Copied {} bytes", bytesCopied);
         } catch (URISyntaxException | IOException e) {
             throw log.throwing(new Error(e));
