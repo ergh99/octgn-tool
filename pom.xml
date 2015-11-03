@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.ergh99.util</groupId>
   <artifactId>octgn-tool</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>OCTGN Tool</name>
   <modules>
@@ -80,6 +80,7 @@
   	<url>https://github.com/ergh99/octgn-tool</url>
   	<connection>scm:git:git://github.com/ergh99/octgn-tool.git</connection>
   	<developerConnection>scm:git:git@github.com:ergh99/octgn-tool.git</developerConnection>
+    <tag>HEAD</tag>
   </scm>
   <distributionManagement>
     <repository>

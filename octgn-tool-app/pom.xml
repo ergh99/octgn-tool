@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.ergh99.util</groupId>
     <artifactId>octgn-tool</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>octgn-tool-app</artifactId>
   <dependencies>
@@ -184,5 +184,6 @@
   <scm>
     <url>https://github.com/ergh99/octgn-tool</url>
     <connection>scm:git:https://github.com/ergh99/octgn-tool.git</connection>
+    <tag>HEAD</tag>
   </scm>
 </project>
