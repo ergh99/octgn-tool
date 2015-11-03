@@ -6,15 +6,15 @@
   <packaging>pom</packaging>
   <name>OCTGN Tool</name>
   <modules>
-  	<module>octgn-tool-app</module>
+    <module>octgn-tool-app</module>
   </modules>
   <properties>
-  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- github server corresponds to entry in ~/.m2/settings.xml -->
     <github.global.server>github</github.global.server>
   </properties>
   <build>
-  	<plugins>
+    <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -54,7 +54,7 @@
           </execution>
         </executions>
       </plugin>
-  	</plugins>
+    </plugins>
   </build>
   <profiles>
     <profile>
@@ -77,9 +77,9 @@
     </profile>
   </profiles>
   <scm>
-  	<url>https://github.com/ergh99/octgn-tool</url>
-  	<connection>scm:git:git://github.com/ergh99/octgn-tool.git</connection>
-  	<developerConnection>scm:git:git@github.com:ergh99/octgn-tool.git</developerConnection>
+    <url>https://github.com/ergh99/octgn-tool</url>
+    <connection>scm:git:git://github.com/ergh99/octgn-tool.git</connection>
+    <developerConnection>scm:git:git@github.com:ergh99/octgn-tool.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
   <distributionManagement>
